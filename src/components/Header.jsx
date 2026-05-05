@@ -1,7 +1,8 @@
+import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import "./Header.css";
 
-export default function Header() {
+function Header() {
   const { pathname } = useLocation();
   const isHome = pathname === "/";
 
@@ -27,3 +28,5 @@ export default function Header() {
     </header>
   );
 }
+
+export default React.memo(Header);

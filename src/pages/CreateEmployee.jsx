@@ -1,5 +1,6 @@
+import React from "react";
 import { useState, useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Dropdown from "../components/Dropdown";
 import DatePicker from "../components/DatePicker";
 import Modal from "../components/Modal";
@@ -7,6 +8,7 @@ import { EmployeeContext } from "../store/EmployeeContext";
 import { STATES, DEPARTMENTS } from "../data";
 
 export default function CreateEmployee() {
+  // État local pour les champs du formulaire
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -22,67 +24,78 @@ export default function CreateEmployee() {
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [showError, setShowError] = useState(false);
   const [fieldErrors, setFieldErrors] = useState({});
+  // Récupère la fonction dispatch du contexte global
   const { dispatch } = useContext(EmployeeContext);
   const navigate = useNavigate();
 
-  const validateForm = () => {
+  // Valide les champs du formulaire et retourne les erreurs
+  const validateForm = React.useCallback(() => {
     const newFieldErrors = {};
 
-    if (!formData.firstName.trim()) newFieldErrors.firstName = "First Name is required";
-    if (!formData.lastName.trim()) newFieldErrors.lastName = "Last Name is required";
-    if (!formData.dateOfBirth) newFieldErrors.dateOfBirth = "Date of Birth is required";
-    if (!formData.startDate) newFieldErrors.startDate = "Start Date is required";
+    if (!formData.firstName.trim())
+      newFieldErrors.firstName = "First Name is required";
+    if (!formData.lastName.trim())
+      newFieldErrors.lastName = "Last Name is required";
+    if (!formData.dateOfBirth)
+      newFieldErrors.dateOfBirth = "Date of Birth is required";
+    if (!formData.startDate)
+      newFieldErrors.startDate = "Start Date is required";
     if (!formData.street.trim()) newFieldErrors.street = "Street is required";
     if (!formData.city.trim()) newFieldErrors.city = "City is required";
     if (!formData.state) newFieldErrors.state = "State is required";
-    if (!formData.zipCode.trim()) newFieldErrors.zipCode = "Zip Code is required";
-    if (!formData.department) newFieldErrors.department = "Department is required";
+    if (!formData.zipCode.trim())
+      newFieldErrors.zipCode = "Zip Code is required";
+    if (!formData.department)
+      newFieldErrors.department = "Department is required";
 
     return newFieldErrors;
-  };
+  }, [formData]);
 
-  const handleChange = (field, value) => {
+  // Met à jour la valeur d'un champ du formulaire
+  const handleChange = React.useCallback((field, value) => {
     setFormData((prev) => ({
       ...prev,
       [field]: value,
     }));
-  };
+  }, []);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  // Gère la soumission du formulaire : validation, ajout de l'employé, affichage de la confirmation
+  const handleSubmit = React.useCallback(
+    (e) => {
+      e.preventDefault();
 
-    // Valider le formulaire
-    const validationErrors = validateForm();
+      // Valider le formulaire
+      const validationErrors = validateForm();
 
-    if (Object.keys(validationErrors).length > 0) {
-      setFieldErrors(validationErrors);
-      setShowError(true);
-      return;
-    }
+      if (Object.keys(validationErrors).length > 0) {
+        setFieldErrors(validationErrors);
+        setShowError(true);
+        return;
+      }
 
-    // Réinitialiser les erreurs
-    setFieldErrors({});
+      setFieldErrors({});
 
-    // Add employee to store
-    dispatch({
-      type: "ADD_EMPLOYEE",
-      payload: formData,
-    });
+      // Add employee to store
+      dispatch({
+        type: "ADD_EMPLOYEE",
+        payload: formData,
+      });
 
-    // Show confirmation and reset form
-    setShowConfirmation(true);
-    setFormData({
-      firstName: "",
-      lastName: "",
-      dateOfBirth: "",
-      startDate: "",
-      street: "",
-      city: "",
-      state: "",
-      zipCode: "",
-      department: "",
-    });
-  };
+      setShowConfirmation(true);
+      setFormData({
+        firstName: "",
+        lastName: "",
+        dateOfBirth: "",
+        startDate: "",
+        street: "",
+        city: "",
+        state: "",
+        zipCode: "",
+        department: "",
+      });
+    },
+    [dispatch, formData, validateForm],
+  );
 
   const handleCloseModal = () => {
     setShowConfirmation(false);
@@ -91,7 +104,6 @@ export default function CreateEmployee() {
   const handleCloseErrorModal = () => {
     setShowError(false);
   };
-
 
   const handleViewEmployees = () => {
     setShowConfirmation(false);
@@ -115,7 +127,9 @@ export default function CreateEmployee() {
                 className={fieldErrors.firstName ? "input-error" : ""}
               />
               {fieldErrors.firstName && (
-                <span className="field-error-message">{fieldErrors.firstName}</span>
+                <span className="field-error-message">
+                  {fieldErrors.firstName}
+                </span>
               )}
             </div>
 
@@ -129,7 +143,9 @@ export default function CreateEmployee() {
                 className={fieldErrors.lastName ? "input-error" : ""}
               />
               {fieldErrors.lastName && (
-                <span className="field-error-message">{fieldErrors.lastName}</span>
+                <span className="field-error-message">
+                  {fieldErrors.lastName}
+                </span>
               )}
             </div>
           </div>
@@ -163,7 +179,9 @@ export default function CreateEmployee() {
                 className={fieldErrors.street ? "input-error" : ""}
               />
               {fieldErrors.street && (
-                <span className="field-error-message">{fieldErrors.street}</span>
+                <span className="field-error-message">
+                  {fieldErrors.street}
+                </span>
               )}
             </div>
 
@@ -178,7 +196,9 @@ export default function CreateEmployee() {
                   className={fieldErrors.city ? "input-error" : ""}
                 />
                 {fieldErrors.city && (
-                  <span className="field-error-message">{fieldErrors.city}</span>
+                  <span className="field-error-message">
+                    {fieldErrors.city}
+                  </span>
                 )}
               </div>
 
@@ -204,7 +224,9 @@ export default function CreateEmployee() {
                   className={fieldErrors.zipCode ? "input-error" : ""}
                 />
                 {fieldErrors.zipCode && (
-                  <span className="field-error-message">{fieldErrors.zipCode}</span>
+                  <span className="field-error-message">
+                    {fieldErrors.zipCode}
+                  </span>
                 )}
               </div>
             </div>
@@ -227,7 +249,7 @@ export default function CreateEmployee() {
           </button>
         </div>
       </div>
-
+      //modal de succès
       <Modal
         isOpen={showConfirmation}
         onClose={handleCloseModal}
@@ -241,7 +263,7 @@ export default function CreateEmployee() {
           </button>
         </div>
       </Modal>
-
+      //modal d'erreur
       <Modal
         isOpen={showError}
         onClose={handleCloseErrorModal}
@@ -249,10 +271,14 @@ export default function CreateEmployee() {
         closeOnBackdropClick={false}
       >
         <div className="modal-error-list">
-          <p className="modal-error-intro">Please fill in all required fields:</p>
+          <p className="modal-error-intro">
+            Please fill in all required fields:
+          </p>
           <ul className="error-items">
             {Object.values(fieldErrors).map((error, idx) => (
-              <li key={idx} className="error-item">{error}</li>
+              <li key={idx} className="error-item">
+                {error}
+              </li>
             ))}
           </ul>
         </div>

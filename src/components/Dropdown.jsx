@@ -1,6 +1,7 @@
+import React from "react";
 import "./Dropdown.css";
 
-export default function Dropdown({
+function Dropdown({
   options = [],
   value = "",
   onChange,
@@ -30,3 +31,5 @@ export default function Dropdown({
     </div>
   );
 }
+
+export default React.memo(Dropdown);

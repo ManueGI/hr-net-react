@@ -1,16 +1,44 @@
-# React + Vite
+# HRnet React
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+HRnet est une application de gestion des ressources humaines permettant de créer, consulter et gérer les employés d’une entreprise. Cette version est une réécriture moderne en React, remplaçant l’ancien plugin jQuery par des composants réutilisables et performants.
 
-Currently, two official plugins are available:
+## Fonctionnalités
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Création d’un nouvel employé via un formulaire dynamique
+- Liste des employés avec recherche, tri et pagination
 
-## React Compiler
+## Stack technique
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- React 18+
+- Vite
+- Context API pour la gestion d’état
+- CSS Modules
 
-## Expanding the ESLint configuration
+## Installation du projet
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+git clone https://github.com/ManueGI/hr-net-react.git
+cd hr-net-react
+npm install
+npm run dev
+```
+
+## Composant principal : DataTable
+
+L’application utilise le composant réutilisable `data-table-component-gif` pour afficher la liste des employés avec tri, recherche et pagination. Ce composant est publié sur npm et peut être intégré dans d’autres projets React.
+
+### Installation du composant
+
+```bash
+npm install data-table-component-gif
+```
+
+### Exemple d’utilisation
+
+```js
+import DataTable from "data-table-component-gif";
+
+<DataTable data={employees} columns={columns} />;
+```
+
+Plus d’informations et documentation complète sur [npm](https://www.npmjs.com/package/data-table-component-gif).

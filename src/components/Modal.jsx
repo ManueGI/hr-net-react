@@ -1,7 +1,7 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import "./Modal.css";
 
-export default function Modal({
+function Modal({
   isOpen = false,
   onClose,
   title,
@@ -64,3 +64,5 @@ export default function Modal({
     </div>
   );
 }
+
+export default React.memo(Modal);

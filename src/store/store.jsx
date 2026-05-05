@@ -1,14 +1,9 @@
-import { useReducer, useEffect } from "react";
+import { useReducer } from "react";
 import { EmployeeContext } from "./EmployeeContext";
 
-const STORAGE_KEY = "hrnet_employees";
-
-const getInitialState = () => {
-  const savedEmployees = localStorage.getItem(STORAGE_KEY);
-  return {
-    employees: savedEmployees ? JSON.parse(savedEmployees) : [],
-  };
-};
+const getInitialState = () => ({
+  employees: [],
+});
 
 function employeeReducer(state, action) {
   switch (action.type) {
@@ -36,11 +31,6 @@ function employeeReducer(state, action) {
 
 export function EmployeeProvider({ children }) {
   const [state, dispatch] = useReducer(employeeReducer, null, getInitialState);
-
-  // Sauvegarder dans localStorage chaque fois que l'état change
-  useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state.employees));
-  }, [state.employees]);
 
   return (
     <EmployeeContext.Provider value={{ state, dispatch }}>

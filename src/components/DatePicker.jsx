@@ -1,18 +1,22 @@
+import React from "react";
 import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { parseISO, format } from "date-fns";
 import "./DatePicker.css";
 
-export default function DatePicker({ label, name, value, onChange, error }) {
-  const handleChange = (date) => {
-    if (date) {
-      // Convertir en format ISO (YYYY-MM-DD) pour le stockage
-      const isoString = format(date, "yyyy-MM-dd");
-      onChange(isoString);
-    } else {
-      onChange("");
-    }
-  };
+function DatePicker({ label, name, value, onChange, error }) {
+  // formate la date et la transmet au parent. useCallback évite de recréer la fonction à chaque rendu.
+  const handleChange = React.useCallback(
+    (date) => {
+      if (date) {
+        const isoString = format(date, "yyyy-MM-dd");
+        onChange(isoString);
+      } else {
+        onChange("");
+      }
+    },
+    [onChange],
+  );
 
   return (
     <div className="form-field">
@@ -38,3 +42,5 @@ export default function DatePicker({ label, name, value, onChange, error }) {
     </div>
   );
 }
+
+export default React.memo(DatePicker);
