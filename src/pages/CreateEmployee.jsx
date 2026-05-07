@@ -249,7 +249,7 @@ export default function CreateEmployee() {
           </button>
         </div>
       </div>
-      //modal de succès
+      {/* modal de succès */}
       <Modal
         isOpen={showConfirmation}
         onClose={handleCloseModal}
@@ -263,7 +263,7 @@ export default function CreateEmployee() {
           </button>
         </div>
       </Modal>
-      //modal d'erreur
+      {/* modal d'erreur */}
       <Modal
         isOpen={showError}
         onClose={handleCloseErrorModal}

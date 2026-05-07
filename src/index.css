@@ -5,7 +5,6 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -36,9 +35,8 @@ h1 {
   color: inherit;
 }
 .container {
-  width: 100%;
   max-width: 1200px;
-  margin: 24px auto;
+  margin: 24px;
   padding: 24px;
   background: #ffffff;
   border-radius: 8px;
@@ -227,20 +225,10 @@ button:focus-visible {
   }
 }
 
-/* HRNet Hero Section Styles */
-.hrnet-hero-section {
-  max-width: 700px;
-  margin: 0 auto;
-  padding: 1rem;
-}
-
-.hrnet-hero-title {
-  font-size: 2.2rem;
-  margin-bottom: 8px;
-}
-
-.hrnet-hero-desc {
-  font-size: 1.1rem;
-  color: #444;
-  margin-bottom: 24px;
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* prend toute la hauteur de la fenêtre */
+  font-size: 1.5rem;
 }
